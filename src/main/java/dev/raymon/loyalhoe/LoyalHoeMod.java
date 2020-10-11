@@ -2,15 +2,17 @@ package dev.raymon.loyalhoe;
 
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.HoeItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import dev.raymon.loyalhoe.events.HoeTossedEvent;
 
 @Mod("loyalhoemod")
 @Mod.EventBusSubscriber(modid = LoyalHoeMod.MOD_ID, bus = Bus.MOD)
@@ -32,6 +34,6 @@ public class LoyalHoeMod
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        Enchantments.LOYALTY.type = EnchantmentType.create("Hoe", item -> item instanceof HoeItem);
+        Enchantments.LOYALTY.type = EnchantmentType.create("Hoe", HoeTossedEvent.isItemOfInterest);
     }
 }

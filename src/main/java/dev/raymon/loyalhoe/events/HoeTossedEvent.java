@@ -11,19 +11,22 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 import java.util.Map;
+import java.util.function.Predicate;
 
 import dev.raymon.loyalhoe.LoyalHoeMod;
 
 @Mod.EventBusSubscriber(modid = LoyalHoeMod.MOD_ID, bus = Bus.FORGE)
 public class HoeTossedEvent
 {
+    public static final Predicate<Item> isItemOfInterest = (Item item) -> item instanceof HoeItem;
+
     @SubscribeEvent
     public static void itemTossed(ItemTossEvent event)
     {
         ItemEntity itemEntity = event.getEntityItem();
         Item item = itemEntity.getItem().getItem();
 
-        if (item instanceof HoeItem){
+        if (isItemOfInterest.test(item)){
             ItemStack itemStack = itemEntity.getItem();
             Map<Enchantment, Integer> enchantmentPairs = EnchantmentHelper.getEnchantments(itemStack);
 
